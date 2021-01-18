@@ -101,5 +101,15 @@ namespace MashenkaPaint.Domain
         {
             return GetShape();
         }
+
+        public override double GetPerimeter()
+        {
+            return 0;
+        }
+
+        public override double GetArea()
+        {
+            return 0;
+        }
     }
 }

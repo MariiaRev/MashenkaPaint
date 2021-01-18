@@ -34,5 +34,8 @@ namespace MashenkaPaint.Domain
         }
         protected abstract List<List<bool>> GetShape();
         protected abstract List<List<bool>> GetShapeContour();
+
+        public abstract double GetPerimeter();
+        public abstract double GetArea();
     }
 }

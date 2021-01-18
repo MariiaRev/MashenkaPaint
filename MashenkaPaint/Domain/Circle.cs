@@ -193,5 +193,15 @@ namespace MashenkaPaint.Domain
 
             return shape;
         }
+
+        public override double GetPerimeter()
+        {
+            return Math.Round((2 * Math.PI * Radius), 2);
+        }
+
+        public override double GetArea()
+        {
+            return Math.Round((Math.PI * Radius * Radius), 2);
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace MashenkaPaint.Domain
         public int Height { get; }
         public TriangleType Type { get; }
 
+        private readonly double _hypotenuse;
+
         public Triangle(TriangleType type, int height, int layer, bool contourOnly = false)
         {
             Type = type;
@@ -22,6 +24,8 @@ namespace MashenkaPaint.Domain
             SetLayer(layer);
             SetPosition(0, 0);
             SetShapeAppearance(contourOnly);
+
+            _hypotenuse = GetHypotenuse();
         }        
 
         protected override List<List<bool>> GetShape()
@@ -215,6 +219,21 @@ namespace MashenkaPaint.Domain
             }
 
             return shape;
+        }
+
+        public override double GetPerimeter()
+        {
+            return Math.Round((Height + Height + _hypotenuse), 2);
+        }
+
+        public override double GetArea()
+        {
+            return Math.Round((Height * Height / 2.0), 2);
+        }
+
+        private double GetHypotenuse()
+        {
+            return Math.Sqrt(2 * Height * Height);
         }
     }
 }
