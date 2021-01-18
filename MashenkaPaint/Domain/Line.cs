@@ -18,7 +18,7 @@ namespace MashenkaPaint.Domain
             Type = type;
             SetLayer(layer);
             SetPosition(0, 0);
-            SetShapeAppearance();
+            SetShapeAppearance(false);
         }
 
         protected override List<List<bool>> GetShape()
@@ -95,6 +95,11 @@ namespace MashenkaPaint.Domain
             }
 
             return shape;
+        }
+
+        protected override List<List<bool>> GetShapeContour()
+        {
+            return GetShape();
         }
     }
 }

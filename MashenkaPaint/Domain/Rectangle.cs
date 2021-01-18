@@ -8,7 +8,7 @@ namespace MashenkaPaint.Domain
         public int Height { get; }
         public int Width { get; }
 
-        public Rectangle(int height, int width, int layer)
+        public Rectangle(int height, int width, int layer, bool contourOnly = false)
         {
             //set height
             if (height > 0)
@@ -24,7 +24,7 @@ namespace MashenkaPaint.Domain
 
             SetLayer(layer);
             SetPosition(0, 0);
-            SetShapeAppearance();
+            SetShapeAppearance(contourOnly);
         }
 
         protected override List<List<bool>> GetShape()
@@ -38,6 +38,27 @@ namespace MashenkaPaint.Domain
                 for (int j = 0; j < Width; j++)
                 {
                     shape[i].Add(true);
+                }
+            }
+
+            return shape;
+        }
+
+        protected override List<List<bool>> GetShapeContour()
+        {
+            var shape = new List<List<bool>>();
+
+            for (int i = 0; i < Height; i++)
+            {
+                shape.Add(new List<bool>());
+
+                for (int j = 0; j < Width; j++)
+                {
+                    if (i == 0 || i == Height - 1 ||
+                        j == 0 || j == Width - 1)
+                        shape[i].Add(true);
+                    else
+                        shape[i].Add(false);
                 }
             }
 

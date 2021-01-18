@@ -8,7 +8,7 @@ namespace MashenkaPaint.Domain
         public int Height { get; }
         public TriangleType Type { get; }
 
-        public Triangle(TriangleType type, int height, int layer)
+        public Triangle(TriangleType type, int height, int layer, bool contourOnly = false)
         {
             Type = type;
 
@@ -21,7 +21,7 @@ namespace MashenkaPaint.Domain
 
             SetLayer(layer);
             SetPosition(0, 0);
-            SetShapeAppearance();
+            SetShapeAppearance(contourOnly);
         }        
 
         protected override List<List<bool>> GetShape()
@@ -96,6 +96,7 @@ namespace MashenkaPaint.Domain
             for (int i = 0; i < Height; i++)
             {
                 shape.Add(new List<bool>());
+
                 for (int j = 0; j < i; j++)
                 {
                     shape[i].Add(false);
@@ -104,6 +105,112 @@ namespace MashenkaPaint.Domain
                 for (int j = Height - i; j > 0; j--)
                 {
                     shape[i].Add(true);
+                }
+            }
+
+            return shape;
+        }
+
+        protected override List<List<bool>> GetShapeContour()
+        {
+            return Type switch
+            {
+                TriangleType.Type1 => GetType1ShapeContour(),
+                TriangleType.Type2 => GetType2ShapeContour(),
+                TriangleType.Type3 => GetType3ShapeContour(),
+                TriangleType.Type4 => GetType4ShapeContour(),
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+        }
+
+        private List<List<bool>> GetType1ShapeContour()
+        {
+            var shape = new List<List<bool>>();
+
+            for (int i = 0; i < Height; i++)
+            {
+                shape.Add(new List<bool>());
+
+                for (int j = 0; j <= i; j++)
+                {
+                    if (i == 0 || i == Height - 1 ||
+                        j == 0 || j == i)
+                        shape[i].Add(true);
+                    else
+                        shape[i].Add(false);
+                }
+            }
+
+            return shape;
+        }
+
+        private List<List<bool>> GetType2ShapeContour()
+        {
+            var shape = new List<List<bool>>();
+
+            for (int i = 0; i < Height; i++)
+            {
+                shape.Add(new List<bool>());
+
+                for (int j = Height - i - 1; j > 0; j--)
+                {
+                    shape[i].Add(false);
+                }
+
+                for (int j = i + 1; j > 0; j--)
+                {
+                    if (i == 0 || i == Height - 1 || 
+                        j == i + 1 || j == 1)
+                        shape[i].Add(true);
+                    else
+                        shape[i].Add(false);
+                }
+            }
+
+            return shape;
+        }
+
+        private List<List<bool>> GetType3ShapeContour()
+        {
+            var shape = new List<List<bool>>();
+
+            for (int i = 0; i < Height; i++)
+            {
+                shape.Add(new List<bool>());
+
+                for (int j = Height - i; j > 0; j--)
+                {
+                    if (i == 0 || i == Height - 1 ||
+                        j == Height - i || j == 1)
+                        shape[i].Add(true);
+                    else
+                        shape[i].Add(false);
+                }
+            }
+
+            return shape;
+        }
+
+        private List<List<bool>> GetType4ShapeContour()
+        {
+            var shape = new List<List<bool>>();
+
+            for (int i = 0; i < Height; i++)
+            {
+                shape.Add(new List<bool>());
+
+                for (int j = 0; j < i; j++)
+                {
+                    shape[i].Add(false);
+                }
+
+                for (int j = Height - i; j > 0; j--)
+                {
+                    if (i == 0 || i == Height - 1 || 
+                        j == Height - i || j == 1)
+                        shape[i].Add(true);
+                    else
+                        shape[i].Add(false);
                 }
             }
 

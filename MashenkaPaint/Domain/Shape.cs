@@ -25,10 +25,14 @@ namespace MashenkaPaint.Domain
                 throw new ArgumentOutOfRangeException(nameof(layer));
         }
 
-        public void SetShapeAppearance()
+        public void SetShapeAppearance(bool contourOnly)
         {
-            ShapeAppearance = GetShape();
+            if (contourOnly)
+                ShapeAppearance = GetShapeContour();
+            else
+                ShapeAppearance = GetShape();
         }
         protected abstract List<List<bool>> GetShape();
+        protected abstract List<List<bool>> GetShapeContour();
     }
 }
