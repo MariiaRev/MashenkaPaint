@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
 
 namespace MashenkaPaint.Domain
 {
@@ -18,84 +18,80 @@ namespace MashenkaPaint.Domain
             Type = type;
             SetLayer(layer);
             SetPosition(0, 0);
+            SetShapeAppearance();
         }
 
-        public override string GetShape()
+        protected override List<List<bool>> GetShape()
         {
             return Type switch
             {
-                LineType.Type1 => GetType1Shape().ToString(),
-                LineType.Type2 => GetType2Shape().ToString(),
-                LineType.Type3 => GetType3Shape().ToString(),
-                LineType.Type4 => GetType4Shape().ToString(),
+                LineType.Type1 => GetType1Shape(),
+                LineType.Type2 => GetType2Shape(),
+                LineType.Type3 => GetType3Shape(),
+                LineType.Type4 => GetType4Shape(),
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }
 
-        private StringBuilder GetType1Shape()
+        private List<List<bool>> GetType1Shape()
         {
-            var shape = new StringBuilder();
+            var shape = new List<List<bool>>();
 
             for (int i = 0; i < Height; i++)
             {
+                shape.Add(new List<bool>());
+
                 for (int j = 0; j < i; j++)
                 {
-                    shape.Append("  ");
+                    shape[i].Add(false);
                 }
 
-                if (i == Height - 1)
-                    shape.Append(Layer.ToString() + " ");
-                else
-                    shape.Append(Layer.ToString() + "\n");
+                shape[i].Add(true);
             }
 
             return shape;
         }
 
-        private StringBuilder GetType2Shape()
+        private List<List<bool>> GetType2Shape()
         {
-            var shape = new StringBuilder();
+            var shape = new List<List<bool>>();
 
             for (int i = 0; i < Height; i++)
             {
-                for (int j = Height; j > i + 1 ; j--)
+                shape.Add(new List<bool>());
+
+                for (int j = Height; j > i + 1; j--)
                 {
-                    shape.Append("  ");
+                    shape[i].Add(false);
                 }
 
-                if (i == Height - 1)
-                    shape.Append(Layer.ToString() + " ");
-                else
-                    shape.Append(Layer.ToString() + "\n");
+                shape[i].Add(true);
             }
 
             return shape;
         }
 
         //horizontal line
-        private StringBuilder GetType3Shape()
+        private List<List<bool>> GetType3Shape()
         {
-            var shape = new StringBuilder();
+            var shape = new List<List<bool>>() { new List<bool>()};
 
             for (int i = 0; i < Height; i++)
             {
-                shape.Append(Layer.ToString() + " ");
+                shape[0].Add(true);
             }
 
             return shape;
         }
 
         //vertical line
-        private StringBuilder GetType4Shape()
+        private List<List<bool>> GetType4Shape()
         {
-            var shape = new StringBuilder();
+            var shape = new List<List<bool>>();
 
             for (int i = 0; i < Height; i++)
             {
-                if (i == Height - 1)
-                    shape.Append(Layer.ToString());
-                else
-                    shape.Append(Layer.ToString() + "\n");
+                shape.Add(new List<bool>() { true });
             }
 
             return shape;

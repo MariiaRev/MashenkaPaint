@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
 
 namespace MashenkaPaint.Domain
 {
@@ -24,25 +24,24 @@ namespace MashenkaPaint.Domain
 
             SetLayer(layer);
             SetPosition(0, 0);
+            SetShapeAppearance();
         }
-        
-        
-        public override string GetShape()
+
+        protected override List<List<bool>> GetShape()
         {
-            var shape = new StringBuilder();
+            var shape = new List<List<bool>>();
 
             for (int i = 0; i < Height; i++)
             {
+                shape.Add(new List<bool>());
+
                 for (int j = 0; j < Width; j++)
                 {
-                    shape.Append(Layer.ToString() + " ");
+                    shape[i].Add(true);
                 }
-
-                if (i != Height - 1)
-                    shape.Append("\n");
             }
 
-            return shape.ToString();
+            return shape;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MashenkaPaint.Domain
 {
@@ -6,6 +7,8 @@ namespace MashenkaPaint.Domain
     {
         public Point Position { get; private set; }
         public int Layer { get; private set;}
+
+        public List<List<bool>> ShapeAppearance { get; private set; }
 
         public void SetPosition(int x, int y)
         {
@@ -21,6 +24,11 @@ namespace MashenkaPaint.Domain
             else
                 throw new ArgumentOutOfRangeException(nameof(layer));
         }
-        public abstract string GetShape();
+
+        public void SetShapeAppearance()
+        {
+            ShapeAppearance = GetShape();
+        }
+        protected abstract List<List<bool>> GetShape();
     }
 }

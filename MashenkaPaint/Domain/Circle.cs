@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
 
 namespace MashenkaPaint.Domain
 {
@@ -16,100 +16,89 @@ namespace MashenkaPaint.Domain
 
             SetLayer(layer);
             SetPosition(0, 0);
+            SetShapeAppearance();
         }
 
-        public override string GetShape()
+        protected override List<List<bool>> GetShape()
         {
-            StringBuilder shape;
+            List<List<bool>> shape;
 
+            //append the first half
             if (Radius % 2 == 0)
                 shape = GetEvenHalf();
             else
                 shape = GetOddHalf();
-            
-            //append second half
-            var halfShape = shape.ToString().Split("\n");
+
+            //append the second half using the first one
+
+            //copy the first half
+            var halfShape = new List<List<bool>>();
+            shape.ForEach(x => halfShape.Add(new List<bool>(x)));
 
             //if radius is odd number add one more line
             if (Radius % 2 == 1)
             {
+                var index = shape.Count;
+                shape.Add(new List<bool>());
+
                 for (int i = 0; i <= Radius * 2; i++)
                 {
-                    shape.Append(Layer.ToString() + " ");
+                    shape[index].Add(true);
                 }
-                shape.Append("\n");
             }
 
-            for (int i = Radius-1; i >= 0; i--)
+            for (int i = Radius - 1; i >= 0; i--)
             {
-                if (i == 0)
-                    shape.Append(halfShape[i]);
-                else
-                    shape.Append(halfShape[i] + "\n");
+                shape.Add(halfShape[i]);
             }
 
-            return shape.ToString();
-        }
-
-        private StringBuilder GetOddHalf()
-        {
-            var shape = new StringBuilder();
-            var maxSpaces = Radius / 2;
-
-            for (int i = 0; i < Radius; i++)
-            {
-                //add spaces
-                for (int j = 0; j < maxSpaces - i; j++)
-                {
-                    shape.Append("  ");
-                }
-
-                //add content
-                if (i <= maxSpaces)
-                    shape.Append("  ");
-                for (int j = 0; j < Radius + 2 * i; j++)
-                {
-                    if (j <= 2 * Radius)
-                    {
-                        shape.Append(Layer.ToString() + " ");
-                    }
-                }
-
-                if (i != Radius - 1)
-                    shape.Append("\n");
-            }
-
-            shape.Append("\n");
             return shape;
         }
 
-        private StringBuilder GetEvenHalf()
+        private List<List<bool>> GetOddHalf()
         {
-            var shape = new StringBuilder();
+            var shape = new List<List<bool>>();
             var maxSpaces = Radius / 2;
 
             for (int i = 0; i < Radius; i++)
             {
-                //add spaces
+                shape.Add(new List<bool>());
                 for (int j = 0; j < maxSpaces - i; j++)
                 {
-                    shape.Append("  ");
+                    shape[i].Add(false);
                 }
 
-                for (int j = 0; j < Radius + 2 * i; j++)
+                if (i <= maxSpaces)
+                    shape[i].Add(false);
+
+                for (int j = 0; j < Radius + 2 * i && j <= 2 * Radius; j++)
                 {
-                    if (j < 2 * Radius)
-                    {
-                        shape.Append(Layer.ToString() + " ");
-                    }
+                    shape[i].Add(true);
                 }
-                 
-
-                if (i != Radius - 1)
-                    shape.Append("\n");
             }
 
-            shape.Append("\n");
+            return shape;
+        }
+
+        private List<List<bool>> GetEvenHalf()
+        {
+            var shape = new List<List<bool>>();
+            var maxSpaces = Radius / 2;
+
+            for (int i = 0; i < Radius; i++)
+            {
+                shape.Add(new List<bool>());
+
+                for (int j = 0; j < maxSpaces - i; j++)
+                {
+                    shape[i].Add(false);
+                }
+
+                for (int j = 0; j < Radius + 2 * i && j < 2 * Radius; j++)
+                {
+                    shape[i].Add(true);
+                }
+            }
 
             return shape;
         }
