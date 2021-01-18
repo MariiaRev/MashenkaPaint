@@ -11,13 +11,13 @@ namespace MashenkaPaint.Domain
         public Rectangle(int height, int width, int layer, bool contourOnly = false)
         {
             //set height
-            if (height > 0)
+            if (height > MinParameterValue && height < MaxParameterValue)
                 Height = height;
             else
                 throw new ArgumentOutOfRangeException(nameof(height));
 
             //set widtht
-            if (width > 0)
+            if (width > MinParameterValue && width < MaxParameterValue)
                 Width = width;
             else
                 throw new ArgumentOutOfRangeException(nameof(width));

@@ -10,7 +10,7 @@ namespace MashenkaPaint.Domain
 
         public Line(LineType type, int height, int layer)
         {
-            if (height > 0)
+            if (height > MinParameterValue && height < MaxParameterValue)
                 Height = height;
             else
                 throw new ArgumentOutOfRangeException(nameof(height));

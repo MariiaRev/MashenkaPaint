@@ -9,7 +9,7 @@ namespace MashenkaPaint.Domain
 
         public Circle(int radius, int layer, bool contourOnly = false)
         {
-            if (radius > 0)
+            if (radius > MinParameterValue && radius < MaxParameterValue)
                 Radius = radius;
             else
                 throw new ArgumentOutOfRangeException(nameof(radius));

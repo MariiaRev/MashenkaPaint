@@ -14,7 +14,7 @@ namespace MashenkaPaint.Domain
         {
             Type = type;
 
-            if (height > 0)
+            if (height > MinParameterValue && height < MaxParameterValue)
             {
                 Height = height;
             }
