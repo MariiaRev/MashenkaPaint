@@ -6,9 +6,9 @@ namespace MashenkaPaint.Domain
     public class Line : Shape
     {
         public int Height { get; }
-        public ShapeType Type { get; }
+        public LineType Type { get; }
 
-        public Line(ShapeType type, int height, int layer)
+        public Line(LineType type, int height, int layer)
         {
             if (height > 0)
                 Height = height;
@@ -24,10 +24,10 @@ namespace MashenkaPaint.Domain
         {
             return Type switch
             {
-                ShapeType.Type1 => GetType1Shape().ToString(),
-                ShapeType.Type2 => GetType2Shape().ToString(),
-                ShapeType.Type3 => GetType3Shape().ToString(),
-                ShapeType.Type4 => GetType4Shape().ToString(),
+                LineType.Type1 => GetType1Shape().ToString(),
+                LineType.Type2 => GetType2Shape().ToString(),
+                LineType.Type3 => GetType3Shape().ToString(),
+                LineType.Type4 => GetType4Shape().ToString(),
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }

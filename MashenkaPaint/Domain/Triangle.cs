@@ -6,9 +6,9 @@ namespace MashenkaPaint.Domain
     public class Triangle : Shape
     {
         public int Height { get; }
-        public ShapeType Type { get; }
+        public TriangleType Type { get; }
 
-        public Triangle(ShapeType type, int height, int layer)
+        public Triangle(TriangleType type, int height, int layer)
         {
             Type = type;
 
@@ -28,10 +28,10 @@ namespace MashenkaPaint.Domain
         {
             return Type switch
             {
-                ShapeType.Type1 => GetType1Shape().ToString(),
-                ShapeType.Type2 => GetType2Shape().ToString(),
-                ShapeType.Type3 => GetType3Shape().ToString(),
-                ShapeType.Type4 => GetType4Shape().ToString(),
+                TriangleType.Type1 => GetType1Shape().ToString(),
+                TriangleType.Type2 => GetType2Shape().ToString(),
+                TriangleType.Type3 => GetType3Shape().ToString(),
+                TriangleType.Type4 => GetType4Shape().ToString(),
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }
