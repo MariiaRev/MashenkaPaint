@@ -17,8 +17,16 @@ namespace MashenkaPaint.Domain
             SetLayer(layer);
             SetPosition(0, 0);
             SetShapeAppearance(contourOnly);
+            SetOccupiedSize();
         }
 
+        protected override void SetOccupiedSize()
+        {
+            if (Radius % 2 == 0)
+                OccupiedWidth = OccupiedHeight = 2 * Radius;
+            else
+                OccupiedWidth = OccupiedHeight = 2 * Radius + 1;
+        }
         protected override List<List<bool>> GetShape()
         {
             List<List<bool>> shape;

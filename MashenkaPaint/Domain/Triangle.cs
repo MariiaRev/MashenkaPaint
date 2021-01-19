@@ -24,10 +24,15 @@ namespace MashenkaPaint.Domain
             SetLayer(layer);
             SetPosition(0, 0);
             SetShapeAppearance(contourOnly);
+            SetOccupiedSize();
 
             _hypotenuse = GetHypotenuse();
-        }        
+        }
 
+        protected override void SetOccupiedSize()
+        {
+            OccupiedWidth = OccupiedHeight = Height;
+        }
         protected override List<List<bool>> GetShape()
         {
             return Type switch

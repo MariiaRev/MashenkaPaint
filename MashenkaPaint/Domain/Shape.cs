@@ -7,8 +7,9 @@ namespace MashenkaPaint.Domain
     {
         public Point Position { get; private set; }
         public int Layer { get; private set; }
+        public int OccupiedWidth { get; protected set; }
+        public int OccupiedHeight { get; protected set; }
         public List<List<bool>> ShapeAppearance { get; private set; }
-        
         public const int MinParameterValue = 0;
         public const int MaxParameterValue = 40;
 
@@ -27,6 +28,7 @@ namespace MashenkaPaint.Domain
                 throw new ArgumentOutOfRangeException(nameof(layer));
         }
 
+        protected abstract void SetOccupiedSize();
         protected void SetShapeAppearance(bool contourOnly)
         {
             if (contourOnly)

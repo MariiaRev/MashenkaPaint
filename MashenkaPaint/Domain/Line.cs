@@ -5,22 +5,45 @@ namespace MashenkaPaint.Domain
 {
     public class Line : Shape
     {
-        public int Height { get; }
+        public int Length { get; }
         public LineType Type { get; }
 
-        public Line(LineType type, int height, int layer)
+        public Line(LineType type, int length, int layer)
         {
-            if (height > MinParameterValue && height < MaxParameterValue)
-                Height = height;
+            if (length > MinParameterValue && length < MaxParameterValue)
+                Length = length;
             else
-                throw new ArgumentOutOfRangeException(nameof(height));
+                throw new ArgumentOutOfRangeException(nameof(length));
             
             Type = type;
             SetLayer(layer);
             SetPosition(0, 0);
             SetShapeAppearance(false);
+            SetOccupiedSize();
         }
 
+        protected override void SetOccupiedSize()
+        {
+            switch(Type)
+            {
+                case LineType.Type1:
+                case LineType.Type2:
+                    {
+                        OccupiedWidth = OccupiedHeight = (int)Math.Round(Length / Math.Sqrt(2));
+                    }; break;
+                case LineType.Type3:
+                    {
+                        OccupiedWidth = Length;
+                        OccupiedHeight = 1;
+                    }; break;
+                case LineType.Type4:
+                    {
+                        OccupiedWidth = 1;
+                        OccupiedHeight = Length;
+                    }; break;
+                default: throw new ArgumentOutOfRangeException(nameof(Type));
+            }
+        }
         protected override List<List<bool>> GetShape()
         {
             return Type switch
@@ -37,7 +60,7 @@ namespace MashenkaPaint.Domain
         {
             var shape = new List<List<bool>>();
 
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Length; i++)
             {
                 shape.Add(new List<bool>());
 
@@ -56,11 +79,11 @@ namespace MashenkaPaint.Domain
         {
             var shape = new List<List<bool>>();
 
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Length; i++)
             {
                 shape.Add(new List<bool>());
 
-                for (int j = Height; j > i + 1; j--)
+                for (int j = Length; j > i + 1; j--)
                 {
                     shape[i].Add(false);
                 }
@@ -76,7 +99,7 @@ namespace MashenkaPaint.Domain
         {
             var shape = new List<List<bool>>() { new List<bool>()};
 
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Length; i++)
             {
                 shape[0].Add(true);
             }
@@ -89,7 +112,7 @@ namespace MashenkaPaint.Domain
         {
             var shape = new List<List<bool>>();
 
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Length; i++)
             {
                 shape.Add(new List<bool>() { true });
             }
