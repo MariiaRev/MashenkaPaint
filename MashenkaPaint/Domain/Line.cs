@@ -29,7 +29,7 @@ namespace MashenkaPaint.Domain
                 LineType.Type2 => GetType2Shape(),
                 LineType.Type3 => GetType3Shape(),
                 LineType.Type4 => GetType4Shape(),
-                _ => throw new ArgumentOutOfRangeException(),
+                _ => throw new ArgumentOutOfRangeException(nameof(Type)),
             };
         }
 

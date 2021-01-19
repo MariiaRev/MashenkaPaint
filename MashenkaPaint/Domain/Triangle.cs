@@ -36,7 +36,7 @@ namespace MashenkaPaint.Domain
                 TriangleType.Type2 => GetType2Shape(),
                 TriangleType.Type3 => GetType3Shape(),
                 TriangleType.Type4 => GetType4Shape(),
-                _ => throw new ArgumentOutOfRangeException(),
+                _ => throw new ArgumentOutOfRangeException(nameof(Type)),
             };
         }
 
@@ -123,7 +123,7 @@ namespace MashenkaPaint.Domain
                 TriangleType.Type2 => GetType2ShapeContour(),
                 TriangleType.Type3 => GetType3ShapeContour(),
                 TriangleType.Type4 => GetType4ShapeContour(),
-                _ => throw new ArgumentOutOfRangeException(),
+                _ => throw new ArgumentOutOfRangeException(nameof(Type)),
             };
         }
 
