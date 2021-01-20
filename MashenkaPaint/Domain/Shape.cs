@@ -11,7 +11,7 @@ namespace MashenkaPaint.Domain
         public int OccupiedHeight { get; protected set; }
         public List<List<bool>> ShapeAppearance { get; private set; }
         public const int MinParameterValue = 0;
-        public const int MaxParameterValue = 40;
+        public const int MaxParameterValue = 11;
 
         public void SetPosition(int x, int y)
         {
