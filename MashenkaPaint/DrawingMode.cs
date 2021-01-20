@@ -325,7 +325,15 @@ namespace MashenkaPaint
             Console.Clear();
             Console.WriteLine($"{"", 26}ADDING A NEW SHAPE");
 
-            bool success= false;
+            if (Shapes.CurrentShapesNumber == Shapes.MaxShapesNumber)
+            {
+                Console.WriteLine($"\n\nYou already have created {Shapes.CurrentShapesNumber} shapes. Sorry, you can't create more.");
+                Console.WriteLine("\n\n\nEnter any key to return to the drawing mode:");
+                Console.ReadKey();
+                return;
+            }
+
+            bool success = false;
             bool contourOnly = false;
             int contourChoice;
 
@@ -384,9 +392,9 @@ namespace MashenkaPaint
                 Console.WriteLine("\nThe shape was successfully added.");
             else
             {
-                if(Shapes.CurrentShapesNumber == Shapes.CurrentShapesNumber)
-                    Console.WriteLine($"\n\nYou already have created {Shapes.CurrentShapesNumber}shapes. Sorry, you can't create more.");
-                else
+                //if(Shapes.CurrentShapesNumber == Shapes.CurrentShapesNumber)
+                //    Console.WriteLine($"\n\nYou already have created {Shapes.CurrentShapesNumber} shapes. Sorry, you can't create more.");
+                //else
                     Console.WriteLine("\n\nSorry, there are some problems on our side. Please, contact the author of the application.");
             }
 
