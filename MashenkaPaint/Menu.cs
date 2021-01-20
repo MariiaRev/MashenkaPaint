@@ -37,7 +37,7 @@ namespace MashenkaPaint
 
         private static void InfoMode()
         {
-            Console.WriteLine($"\n\n{"",32}RULES");
+            Console.WriteLine($"\n\n{"",32}RULES\n\n");
 
             var rulesPath = "rules.txt";
             var rules = ReadTxtFile(rulesPath);
