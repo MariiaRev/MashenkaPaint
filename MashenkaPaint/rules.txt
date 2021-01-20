@@ -19,3 +19,4 @@ up arrow - move the shape up
 left arrow - move the shape to the left
 right arrow - move the shape to the right
 delete - delete the shape from the scene (needs to active the shape layer previously)
+escape - exit the drawing mode
