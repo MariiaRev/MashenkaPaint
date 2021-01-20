@@ -7,13 +7,13 @@ namespace MashenkaPaint
     {
         public static void Start()
         {
-            Console.WriteLine($"\n\n{"",30}MAIN MENU");
+            Console.WriteLine($"\n{"",30}MAIN MENU");
 
             while (true)
             {
                 Console.WriteLine();
                 var userChoice = ValidateUserData.AcceptIntDataInRange("\n\nAvailable commands:\n0 - exit the program\n1 - switch to drawing mode\n" +
-                                                                       "2 - switch to info mode\n\nPlease, choose menu item:", 0, 2);
+                                                                       "2 - view rules\n\nPlease, choose menu item:", 0, 2);
 
                 switch (userChoice)
                 {
@@ -25,6 +25,7 @@ namespace MashenkaPaint
                     case 1:
                         {
                             DrawingMode.Draw();
+                            Console.WriteLine($"\n{"",30}MAIN MENU");
                         }; break;
                     case 2:
                         {
@@ -36,7 +37,7 @@ namespace MashenkaPaint
 
         private static void InfoMode()
         {
-            Console.WriteLine($"\n\n{"",30}INFO MODE");
+            Console.WriteLine($"\n\n{"",32}RULES\n\n");
 
             var rulesPath = "rules.txt";
             var rules = ReadTxtFile(rulesPath);
