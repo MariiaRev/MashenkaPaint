@@ -1,0 +1,21 @@
+﻿		Hotkeys designations at drawing mode
+
+ctrl + N - create new shape
+ctrl + S - save the scene to the file (function is in development)
+ctrl + O - download the scene from the file (function is in development)
+ctrl + 0 / ctrl + 1 / ... / ctrl + 9 - active the shape at the layer i (i from 0 to 9)
+ctrl + left arrow - change the shape layer to one below (needs to active the shape layer previously)
+ctrl + right arrow - change the shape layer to one above (needs to active the shape layer previously)
+
+alt + P - set order by the shape Perimeter parameter
+alt + A - set order by the shape Area parameter
+alt + L - set order by the shape Layer parameter
+alt + D - set default order
+alt + W - view shapes ordered ascending (needs to active the order parameter previously)
+alt + S - view shapes ordered descending (needs to active the order parameter previously)
+
+down arrow - move the shape down
+up arrow - move the shape up
+left arrow - move the shape to the left
+right arrow - move the shape to the right
+delete - delete the shape from the scene (needs to active the shape layer previously)
