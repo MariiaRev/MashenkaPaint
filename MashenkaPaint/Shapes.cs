@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Collections.Generic;
 using MashenkaPaint.Domain;
 
@@ -9,10 +10,10 @@ namespace MashenkaPaint
     public class Shapes
     {
         private readonly Shape[] _shapes;
-        public const int MaxShapesNumber = 10;             //0, 1, ... 9
+        const int MaxShapesNumber = 10;             //0, 1, ... 9
         public static int CurrentShapesNumber { get; private set; }
-        private readonly int _fieldSizeX = 50;
-        private readonly int _fieldSizeY = 30;
+        private readonly int _fieldSizeX = 20;
+        private readonly int _fieldSizeY = 10;
 
         public Shapes()
         {
@@ -70,12 +71,10 @@ namespace MashenkaPaint
         }
 
         //move shape from the specified layer to the specified position
-        public void Move(int bottom, int right, int layer)
+        public void Move(Point position, int layer)
         {
-            var position = new Point(right, bottom);
-
             if (layer < MaxShapesNumber && layer >= 0 && _shapes[layer] != null &&
-                position.X >= 0 && position.Y >= 0 && 
+                position.X > 0 && position.Y > 0 && 
                 position.X + _shapes[layer].OccupiedWidth < _fieldSizeX &&
                 position.Y + _shapes[layer].OccupiedHeight < _fieldSizeY)
             {
@@ -92,14 +91,10 @@ namespace MashenkaPaint
             else
             {
                 var overlappingShapes = OverlapShapes(shapes);
-                var fieldRaws = overlappingShapes.GetLength(0);
-                var fieldColumns = overlappingShapes.GetLength(1);
-                
-                Console.WriteLine($"There is the scene ({fieldRaws}x{fieldColumns})");
 
-                for (int i = 0; i < fieldRaws; i++)
+                for (int i = 0; i < overlappingShapes.GetLength(0); i++)
                 {
-                    for (int j = 0; j < fieldColumns; j++)
+                    for (int j = 0; j < overlappingShapes.GetLength(1); j++)
                     {
                         if (overlappingShapes[i, j] == null)
                         {
@@ -115,28 +110,47 @@ namespace MashenkaPaint
             }
         }
 
-
-        public bool ChangeLayer(int layer, bool upward)
+        public bool SaveShapesToFile(string path, bool overwrite = false)
         {
-            if (upward && layer < MaxShapesNumber - 1)
+            var options = new JsonSerializerOptions
             {
-                var temp = _shapes[layer];
-                _shapes[layer] = _shapes[layer + 1];
-                _shapes[layer + 1] = temp;
-                _shapes[layer + 1].SetLayer(layer + 1);
-                return true;
-            }
-            else if (!upward && layer > 0)
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+
+            try
             {
-                var temp = _shapes[layer];
-                _shapes[layer] = _shapes[layer - 1];
-                _shapes[layer - 1] = temp;
-                _shapes[layer - 1].SetLayer(layer - 1);
-                return true;
+                var json = JsonSerializer.Serialize(_shapes, options);
+
+                if (File.Exists(path) && !overwrite)
+                    return false;
+                else
+                {
+                    File.WriteAllText(path, json);
+                    return true;
+                }
             }
-            else
-                return false;
+            catch { return false; }
         }
+
+        //public bool LoadShapesFromFile(string path)
+        //{
+            //try
+            //{
+            //    var json = File.ReadAllText(path);
+            //    var shapes = JsonSerializer.Deserialize<Shape[]>(json);
+
+            //    for (int i = 0; i < MaxShapesNumber; i++)
+            //    {
+            //        if(shapes[i] ==null)
+            //        {
+
+            //        }
+            //        if(shapes[i].Layer == )
+            //    }
+            //}
+            //catch { return false; }
+        //}
 
         private List<Shape> ShapesOrderedBy(Order order)
         {
@@ -194,6 +208,20 @@ namespace MashenkaPaint
             }
 
             return field;
+        }
+
+        private static int?[,] Copy(int?[,] listFrom, int?[,] listWhere)
+        {
+
+            for (int i = 0; i < listFrom.GetLength(0); i++)
+            {
+                for (int j = 0; j < listFrom.GetLength(1); j++)
+                {
+                    listWhere[i, j] = listFrom[i, j];
+                }
+            }
+
+            return listWhere;
         }
     }
 }
