@@ -37,6 +37,7 @@ namespace MashenkaPaint
                                 //add a new shapes
                                 AddShape();
                                 Console.Clear();
+                                Console.WriteLine($"{"",26}DRAWING MODE\n\n");
                                 shapes.ShowShapes(setOrder);
                             }; break;
                         case ConsoleKey.S:
@@ -338,9 +339,11 @@ namespace MashenkaPaint
             int contourChoice;
 
             var shapeType = ValidateUserData.AcceptShapeType();
-            
+
             if (shapeType == null)
-                Draw();
+            {
+                return;
+            }
 
             if (!(shapeType is ShapeType.Line))
             {

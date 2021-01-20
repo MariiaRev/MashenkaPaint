@@ -8,11 +8,10 @@ namespace MashenkaPaint
     public class Shapes
     {
         private readonly Shape[] _shapes;
-        //const int MaxShapesNumber = 10;             //0, 1, ... 9
-        public const int MaxShapesNumber = 2;             //0, 1, ... 9
+        public const int MaxShapesNumber = 10;             //0, 1, ... 9
         public static int CurrentShapesNumber { get; private set; }
         private readonly int _fieldSizeX = 50;
-        private readonly int _fieldSizeY = 40;
+        private readonly int _fieldSizeY = 20;
 
         public Shapes()
         {
